@@ -11,10 +11,8 @@
             padding: 0;
             font-family: Arial, sans-serif;
             text-align: center;
-
-            /* ЗЕЛЁНО-КРАСНЫЙ ГРАДИЕНТ */
-            background: linear-gradient(135deg, #00ff55, #ff0000, #009933, #cc0000);
-            background-size: 400% 400%;
+            background: linear-gradient(135deg, #00ff55, #ff0000);
+            background-size: 200% 200%;
             animation: gradientMove 6s ease infinite;
             color: white;
         }
@@ -25,7 +23,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ВЕРХНЯЯ ПАНЕЛЬ */
+        /* Верхняя панель */
         .top-bar {
             width: 100%;
             height: 60px;
@@ -69,7 +67,7 @@
             display: block;
         }
 
-        /* красная кнопка */
+        /* Красная кнопка */
         #spinButton {
             width: 150px;
             height: 150px;
@@ -85,24 +83,55 @@
         #spinButton:active {
             transform: scale(0.92);
         }
+
+        /* Контейнер для кнопки "Дальше" */
+        .bottom-buttons {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            padding: 30px 40px;
+            box-sizing: border-box;
+        }
+
+        .next-btn {
+            padding: 14px 30px;
+            font-size: 16px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            background: linear-gradient(135deg, #6a5cff, #7b4dff);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transition: 0.2s;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- ВЕРХНИЕ КНОПКИ -->
+    <!-- Верхние кнопки -->
     <div class="top-bar">
         <button class="nav-btn" onclick="history.back()">← Назад</button>
         <button class="nav-btn" onclick="history.forward()">Вперёд →</button>
     </div>
 
-    <h1>прокрути барабан:</h1>
+    <h1>Прокрути барабан:</h1>
 
     <div id="imageBox">
         <img id="slotImage" src="pdf/ludo.img" alt="image">
     </div>
 
     <div id="spinButton"></div>
+
+    <!-- Кнопка ДАЛЬШЕ -->
+    <div class="bottom-buttons">
+        <button class="next-btn" onclick="goNext()">Дальше →</button>
+    </div>
 
     <script>
         const images = [
@@ -132,6 +161,10 @@
                 spinning = false;
             }, 1500);
         });
+
+        function goNext() {
+            window.location.href = "page1.html";
+        }
     </script>
 
 </body>
