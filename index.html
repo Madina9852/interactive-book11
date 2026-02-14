@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игровая страница</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: white;
+        }
+
+        /* ВЕРХНЯЯ ПАНЕЛЬ */
+        .top-bar {
+            width: 100%;
+            height: 60px;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 10px;
+            box-sizing: border-box;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            background: #ddd;
+            border-radius: 8px;
+            border: 1px solid #aaa;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: #ccc;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        #imageBox {
+            width: 80%;
+            max-width: 500px;
+            margin: 30px auto;
+        }
+
+        #imageBox img {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+        }
+
+        /* красная кнопка */
+        #spinButton {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 6px solid white;
+            background: radial-gradient(circle, #ff4a4a, #b70000);
+            margin: 40px auto;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255,0,0,0.4);
+            transition: 0.2s;
+        }
+
+        #spinButton:active {
+            transform: scale(0.92);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ВЕРХНИЕ КНОПКИ -->
+    <div class="top-bar">
+        <button class="nav-btn" onclick="history.back()">← Назад</button>
+        <button class="nav-btn" onclick="history.forward()">Вперёд →</button>
+    </div>
+
+    <h1>прокрути барабан:</h1>
+
+    <div id="imageBox">
+        <img id="slotImage" src="pdf/ludo.img" alt="image">
+    </div>
+
+    <div id="spinButton"></div>
+
+    <script>
+        const images = [
+            "pdf/ludo.img",
+            "pdf/narko.img",
+            "pdf/url.img"
+        ];
+
+        const imgElement = document.getElementById("slotImage");
+        const button = document.getElementById("spinButton");
+
+        let spinning = false;
+
+        button.addEventListener("click", () => {
+            if (spinning) return;
+            spinning = true;
+
+            let counter = 0;
+
+            // Быстрое перемешивание — 50 мс вместо 120
+            const spinInterval = setInterval(() => {
+                const randomImg = images[Math.floor(Math.random() * images.length)];
+                imgElement.src = randomImg;
+                counter++;
+            }, 50);
+
+            // Остановка через 1.5 секунды
+            setTimeout(() => {
+                clearInterval(spinInterval);
+                const finalImg = images[Math.floor(Math.random() * images.length)];
+                imgElement.src = finalImg;
+
+                spinning = false;
+            }, 1500);
+        });
+    </script>
+
+</body>
+</html>
