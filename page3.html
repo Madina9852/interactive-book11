@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Кабинет игрока</title>
+<title>Casino</title>
 
 <style>
 body{
     margin:0;
+    background:radial-gradient(circle at top,#222,#000);
     font-family:Arial, sans-serif;
-    background:radial-gradient(circle at top,#1a1a1a,#000);
     color:white;
     display:flex;
     justify-content:center;
@@ -17,49 +17,100 @@ body{
     height:100vh;
 }
 
-.panel{
-    width:420px;
+/* корпус автомата */
+.machine{
     background:#111;
-    border-radius:20px;
     padding:20px;
-    box-shadow:0 0 20px #00eaff;
+    border-radius:20px;
+    box-shadow:0 0 20px #ff00ff, 0 0 40px #ff00ff inset;
+    width:420px;
+    text-align:center;
+    position:relative;
 }
 
 h2{
     margin-top:0;
-    text-align:center;
-    color:gold;
-}
-
-.info{
-    background:#1f1f1f;
-    padding:10px;
-    border-radius:10px;
-    margin-bottom:10px;
-}
-
-.vip{
     color:gold;
     text-shadow:0 0 10px orange;
+}
+
+#balance{
+    margin:10px 0;
     font-weight:bold;
 }
 
+/* барабаны */
+.reels{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:15px 0;
+}
+
+.reel{
+    width:80px;
+    height:80px;
+    background:white;
+    color:black;
+    font-size:40px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:10px;
+    box-shadow:inset 0 0 10px #000;
+}
+
+/* ручка */
+.handle{
+    position:absolute;
+    right:-30px;
+    top:50%;
+    width:20px;
+    height:100px;
+    background:silver;
+    border-radius:10px;
+}
+
+.handle::after{
+    content:"";
+    position:absolute;
+    bottom:-20px;
+    left:-10px;
+    width:40px;
+    height:40px;
+    background:red;
+    border-radius:50%;
+}
+
+/* кнопки */
 .btn{
-    width:100%;
-    padding:12px;
+    background:linear-gradient(135deg,#ff512f,#dd2476);
     border:none;
-    border-radius:15px;
-    margin-top:10px;
+    padding:12px 18px;
+    color:white;
+    border-radius:20px;
     cursor:pointer;
+    margin-top:10px;
     font-weight:bold;
 }
 
-.deposit{
-    background:linear-gradient(135deg,#00c853,#64dd17);
+.btn:disabled{
+    opacity:0.5;
 }
 
-.bonus{
-    background:linear-gradient(135deg,#ff512f,#dd2476);
+#notify{
+    min-height:24px;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.flash{
+    animation:flash 0.3s alternate 6;
+}
+
+@keyframes flash{
+    from{box-shadow:0 0 10px yellow;}
+    to{box-shadow:0 0 30px yellow;}
 }
 
 .nav{
@@ -67,47 +118,106 @@ h2{
     justify-content:space-between;
     margin-top:15px;
 }
-
-.small{
-    width:48%;
-}
 </style>
 </head>
 
 <body>
 
-<div class="panel">
-    <h2>👤 Личный кабинет</h2>
+<div class="machine">
+    <div class="handle"></div>
 
-    <div class="info">
-        Игрок: <b>ID 458921</b>
+    <h2>🎰 SUPER SLOT</h2>
+    <div id="balance">Баланс: 10 000</div>
+
+    <div class="reels">
+        <div class="reel" id="r1">7️⃣</div>
+        <div class="reel" id="r2">🍒</div>
+        <div class="reel" id="r3">💎</div>
     </div>
 
-    <div class="info vip">
-        ⭐ VIP GOLD
-    </div>
+    <button class="btn" id="spinBtn" onclick="spin()">Крутить</button>
 
-    <div class="info">
-        Баланс: 0
-    </div>
-
-    <div class="info" style="color:red;">
-        Долг: 235 000
-    </div>
-
-    <button class="btn deposit" onclick="alert('Пополнение временно недоступно')">
-        💳 Пополнить счёт
-    </button>
-
-    <button class="btn bonus" onclick="alert('Бонус активирован, но средств недостаточно')">
-        🎁 Забрать бонус
-    </button>
-
-    <div class="nav">
-        <button class="btn small" onclick="location.href='page3.html'">← Назад</button>
-        <button class="btn small" onclick="location.href='page5.html'">Дальше →</button>
-    </div>
+    <div id="notify"></div>
+    <div class="nav" id="nav"></div>
 </div>
+
+<script>
+let balance = 10000;
+let spinCount = 0;
+let debtInterval;
+const symbols = ["🍒","🍋","💎","7️⃣"];
+
+function spin(){
+    const btn=document.getElementById("spinBtn");
+    const notify=document.getElementById("notify");
+    const machine=document.querySelector(".machine");
+    btn.disabled=true;
+
+    notify.textContent="Барабаны крутятся...";
+
+    let speed=50;
+    let t=0;
+
+    const anim=setInterval(()=>{
+        r1.textContent=symbols[Math.floor(Math.random()*4)];
+        r2.textContent=symbols[Math.floor(Math.random()*4)];
+        r3.textContent=symbols[Math.floor(Math.random()*4)];
+
+        t++;
+        if(t>20) speed+=10;   // замедление
+    },speed);
+
+    setTimeout(()=>{
+        clearInterval(anim);
+        spinCount++;
+
+        // джекпот
+        if(spinCount===1){
+            r1.textContent=r2.textContent=r3.textContent="7️⃣";
+            balance+=100000;
+            document.getElementById("balance").textContent="Баланс: "+balance;
+            notify.textContent="🎉 ДЖЕКПОТ +100 000!";
+            notify.style.color="gold";
+            machine.classList.add("flash");
+            setTimeout(()=>machine.classList.remove("flash"),2000);
+            btn.disabled=false;
+        }
+
+        // проигрыш
+        else{
+            r1.textContent="🍒";
+            r2.textContent="💎";
+            r3.textContent="🍋";
+            notify.textContent="❌ Вы проиграли!";
+            notify.style.color="red";
+            startDebt();
+        }
+
+    },2500);
+}
+
+function startDebt(){
+    let debt=200000;
+    const bal=document.getElementById("balance");
+    debtInterval=setInterval(()=>{
+        debt+=5000;
+        bal.textContent="Долг: "+debt;
+    },1000);
+
+    setTimeout(()=>{
+        endGame();
+    },4000);
+}
+
+function endGame(){
+    clearInterval(debtInterval);
+    document.getElementById("notify").textContent="Игра окончена.";
+    document.getElementById("nav").innerHTML=`
+        <button class="btn" onclick="location.href='page2.html'">← Назад</button>
+        <button class="btn" onclick="location.href='page4.html'">Дальше →</button>
+    `;
+}
+</script>
 
 </body>
 </html>
