@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Состав сигареты</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#2c3e50,#000);
+    color:white;
+    text-align:center;
+}
+
+h2{
+    margin:15px 0;
+}
+
+/* картинка */
+.img-wrap{
+    position:relative;
+    width:95%;
+    max-width:900px;
+    margin:auto;
+}
+
+.img-wrap img{
+    width:100%;
+    border-radius:10px;
+}
+
+/* панель кнопок */
+.chem-buttons{
+    margin:15px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+}
+
+.chem{
+    padding:8px 12px;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+    background:linear-gradient(135deg,#ff512f,#dd2476);
+    color:white;
+}
+
+/* popup */
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.popup{
+    background:white;
+    color:black;
+    width:90%;
+    max-width:400px;
+    padding:20px;
+    border-radius:15px;
+    text-align:left;
+}
+
+.close{
+    float:right;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* навигация */
+.nav{
+    display:flex;
+    justify-content:space-between;
+    margin:20px;
+}
+
+.btn{
+    background:linear-gradient(135deg,#6a5cff,#8f7bff);
+    border:none;
+    padding:10px 15px;
+    color:white;
+    border-radius:15px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🚬 Что содержится в сигарете</h2>
+
+<div class="img-wrap">
+    <!-- положи картинку рядом с файлом -->
+    <img src="img.jpg" alt="">
+</div>
+
+<div class="chem-buttons">
+    <button class="chem" onclick="showInfo('co')">Угарный газ</button>
+    <button class="chem" onclick="showInfo('nic')">Никотин</button>
+    <button class="chem" onclick="showInfo('cad')">Кадмий</button>
+    <button class="chem" onclick="showInfo('met')">Метанол</button>
+    <button class="chem" onclick="showInfo('amm')">Аммоний</button>
+</div>
+
+<div class="nav">
+    <button class="btn" onclick="location.href='page4.html'">← Назад</button>
+    <button class="btn" onclick="location.href='page6.html'">Дальше →</button>
+</div>
+
+<!-- popup -->
+<div class="overlay" id="overlay">
+    <div class="popup">
+        <span class="close" onclick="hide()">✖</span>
+        <h3 id="title"></h3>
+        <p id="text"></p>
+    </div>
+</div>
+
+<script>
+function showInfo(type){
+    const title=document.getElementById("title");
+    const text=document.getElementById("text");
+
+    if(type==="co"){
+        title.textContent="Угарный газ";
+        text.textContent="Снижает поступление кислорода к органам и увеличивает нагрузку на сердце.";
+    }
+    if(type==="nic"){
+        title.textContent="Никотин";
+        text.textContent="Вызывает сильную зависимость и влияет на сосуды и мозг.";
+    }
+    if(type==="cad"){
+        title.textContent="Кадмий";
+        text.textContent="Токсичный металл, накапливается в организме и повреждает почки и лёгкие.";
+    }
+    if(type==="met"){
+        title.textContent="Метанол";
+        text.textContent="Ядовитое вещество, поражает нервную систему.";
+    }
+    if(type==="amm"){
+        title.textContent="Аммоний";
+        text.textContent="Раздражает дыхательные пути и усиливает всасывание никотина.";
+    }
+
+    document.getElementById("overlay").style.display="flex";
+}
+
+function hide(){
+    document.getElementById("overlay").style.display="none";
+}
+</script>
+
+</body>
+</html>
