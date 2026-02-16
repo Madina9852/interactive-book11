@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сопоставление</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#141e30,#243b55);
+    color:white;
+    text-align:center;
+}
+
+h2{ margin:15px 0; }
+
+.area{
+    display:flex;
+    justify-content:space-around;
+    margin:20px;
+    gap:10px;
+}
+
+.column{
+    width:45%;
+}
+
+.item{
+    background:#ffffff;
+    color:black;
+    padding:10px;
+    margin:10px 0;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.selected{
+    outline:3px solid yellow;
+}
+
+.correct{
+    background:#4caf50 !important;
+    color:white;
+}
+
+.wrong{
+    background:#f44336 !important;
+    color:white;
+}
+
+/* навигация */
+.nav{
+    display:flex;
+    justify-content:space-between;
+    margin:20px;
+}
+
+.btn{
+    background:linear-gradient(135deg,#6a5cff,#8f7bff);
+    border:none;
+    padding:10px 15px;
+    color:white;
+    border-radius:15px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🔗 Соедини правильно</h2>
+
+<div class="area">
+    <!-- левая колонка -->
+    <div class="column" id="left">
+        <div class="item" data-match="1" onclick="pickLeft(this)">Никотин</div>
+        <div class="item" data-match="2" onclick="pickLeft(this)">Угарный газ</div>
+        <div class="item" data-match="3" onclick="pickLeft(this)">Кадмий</div>
+    </div>
+
+    <!-- правая колонка -->
+    <div class="column" id="right">
+        <div class="item" data-match="1" onclick="pickRight(this)">Вызывает зависимость</div>
+        <div class="item" data-match="2" onclick="pickRight(this)">Снижает кислород в крови</div>
+        <div class="item" data-match="3" onclick="pickRight(this)">Токсичный металл</div>
+    </div>
+</div>
+
+<div class="nav">
+    <button class="btn" onclick="location.href='page5.html'">← Назад</button>
+    <button class="btn" onclick="location.href='page7.html'">Дальше →</button>
+</div>
+
+<script>
+let leftPick = null;
+
+function pickLeft(el){
+    document.querySelectorAll("#left .item").forEach(i=>i.classList.remove("selected"));
+    leftPick = el;
+    el.classList.add("selected");
+}
+
+function pickRight(el){
+    if(!leftPick) return;
+
+    if(leftPick.dataset.match === el.dataset.match){
+        leftPick.classList.remove("selected");
+        leftPick.classList.add("correct");
+        el.classList.add("correct");
+    } else {
+        el.classList.add("wrong");
+        setTimeout(()=>el.classList.remove("wrong"),700);
+    }
+
+    leftPick = null;
+}
+</script>
+
+</body>
+</html>
