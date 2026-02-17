@@ -127,7 +127,7 @@ h2{
     <div class="handle"></div>
 
     <h2>🎰 SUPER SLOT</h2>
-    <div id="balance">Баланс: 10 000</div>
+    <div id="balance">Теңгерім: 10 000</div>
 
     <div class="reels">
         <div class="reel" id="r1">7️⃣</div>
@@ -135,7 +135,7 @@ h2{
         <div class="reel" id="r3">💎</div>
     </div>
 
-    <button class="btn" id="spinBtn" onclick="spin()">Крутить</button>
+    <button class="btn" id="spinBtn" onclick="spin()">Айналдыру</button>
 
     <div id="notify"></div>
     <div class="nav" id="nav"></div>
@@ -175,7 +175,7 @@ function spin(){
         if(spinCount===1){
             r1.textContent=r2.textContent=r3.textContent="7️⃣";
             balance+=100000;
-            document.getElementById("balance").textContent="Баланс: "+balance;
+            document.getElementById("balance").textContent="Теңгерім: "+balance;
             notify.textContent="🎉 ДЖЕКПОТ +100 000!";
             notify.style.color="gold";
             machine.classList.add("flash");
@@ -188,7 +188,7 @@ function spin(){
             r1.textContent="🍒";
             r2.textContent="💎";
             r3.textContent="🍋";
-            notify.textContent="❌ Вы проиграли!";
+            notify.textContent="❌ Сіз жеңілдіңіз!";
             notify.style.color="red";
             startDebt();
         }
@@ -201,7 +201,7 @@ function startDebt(){
     const bal=document.getElementById("balance");
     debtInterval=setInterval(()=>{
         debt+=5000;
-        bal.textContent="Долг: "+debt;
+        bal.textContent="Қарыз: "+debt;
     },1000);
 
     setTimeout(()=>{
@@ -211,10 +211,10 @@ function startDebt(){
 
 function endGame(){
     clearInterval(debtInterval);
-    document.getElementById("notify").textContent="Игра окончена.";
+    document.getElementById("notify").textContent="Ойын аяқталды.";
     document.getElementById("nav").innerHTML=`
-        <button class="btn" onclick="location.href='page2.html'">← Назад</button>
-        <button class="btn" onclick="location.href='page4.html'">Дальше →</button>
+        <button class="btn" onclick="location.href='page2.html'">← Артқа</button>
+        <button class="btn" onclick="location.href='page4.html'">Алға →</button>
     `;
 }
 </script>
