@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Состав сигареты</title>
+<title>Темекі құрамы</title>
 
 <style>
 body{
@@ -103,7 +103,7 @@ h2{
 </div>
 
 <div class="chem-buttons">
-    <button class="chem" onclick="showInfo('co')">Угарный газ</button>
+    <button class="chem" onclick="showInfo('co')">Көміртек тотығы</button>
     <button class="chem" onclick="showInfo('nic')">Никотин</button>
     <button class="chem" onclick="showInfo('cad')">Кадмий</button>
     <button class="chem" onclick="showInfo('met')">Метанол</button>
@@ -111,8 +111,8 @@ h2{
 </div>
 
 <div class="nav">
-    <button class="btn" onclick="location.href='page4.html'">← Назад</button>
-    <button class="btn" onclick="location.href='page6.html'">Дальше →</button>
+    <button class="btn" onclick="location.href='page4.html'">← Артқа</button>
+    <button class="btn" onclick="location.href='page6.html'">Алға →</button>
 </div>
 
 <!-- popup -->
@@ -130,24 +130,24 @@ function showInfo(type){
     const text=document.getElementById("text");
 
     if(type==="co"){
-        title.textContent="Угарный газ";
-        text.textContent="Снижает поступление кислорода к органам и увеличивает нагрузку на сердце.";
+        title.textContent="Көміртек тотығы";
+        text.textContent="Ағзаларға оттегінің түсуін азайтады және жүрекке жүктемені арттырады.";
     }
     if(type==="nic"){
         title.textContent="Никотин";
-        text.textContent="Вызывает сильную зависимость и влияет на сосуды и мозг.";
+        text.textContent="Бұл өте тәуелді және тамырлар мен миға әсер етеді.";
     }
     if(type==="cad"){
         title.textContent="Кадмий";
-        text.textContent="Токсичный металл, накапливается в организме и повреждает почки и лёгкие.";
+        text.textContent="Улы металл денеде жиналып, бүйрек пен өкпені зақымдайды.";
     }
     if(type==="met"){
         title.textContent="Метанол";
-        text.textContent="Ядовитое вещество, поражает нервную систему.";
+        text.textContent="Жүйке жүйесіне әсер ететін улы зат.";
     }
     if(type==="amm"){
         title.textContent="Аммоний";
-        text.textContent="Раздражает дыхательные пути и усиливает всасывание никотина.";
+        text.textContent="Тыныс алу жолдарын тітіркендіреді және никотиннің сіңуін күшейтеді.";
     }
 
     document.getElementById("overlay").style.display="flex";
