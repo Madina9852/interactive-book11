@@ -3,119 +3,156 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Сопоставление</title>
+<title>Ұрлық салдары</title>
 
 <style>
 body{
     margin:0;
     font-family:Arial, sans-serif;
-    background:linear-gradient(135deg,#141e30,#243b55);
-    color:white;
-    text-align:center;
-}
-
-h2{ margin:15px 0; }
-
-.area{
+    background:linear-gradient(135deg,#6ca06c,#c46a6a);
     display:flex;
-    justify-content:space-around;
-    margin:20px;
+    flex-direction:column;
+    align-items:center;
+    min-height:100vh;
+    color:white;
+}
+
+h2{
+    margin-top:20px;
+}
+
+.container{
+    width:90%;
+    max-width:900px;
+}
+
+.words{
+    display:flex;
+    flex-wrap:wrap;
     gap:10px;
+    justify-content:center;
+    margin:20px 0;
 }
 
-.column{
-    width:45%;
-}
-
-.item{
-    background:#ffffff;
+.word{
+    background:white;
     color:black;
-    padding:10px;
-    margin:10px 0;
-    border-radius:10px;
-    cursor:pointer;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:grab;
+    font-weight:bold;
 }
 
-.selected{
-    outline:3px solid yellow;
+.slot{
+    margin:30px auto;
+    width:80%;
+    min-height:100px;
+    background:rgba(255,255,255,0.2);
+    border:2px dashed white;
+    border-radius:20px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:15px;
 }
 
 .correct{
-    background:#4caf50 !important;
+    background:#2e7d32 !important;
     color:white;
 }
 
 .wrong{
-    background:#f44336 !important;
+    background:#c62828 !important;
     color:white;
 }
 
-/* навигация */
 .nav{
+    margin-top:auto;
+    width:90%;
+    max-width:900px;
     display:flex;
     justify-content:space-between;
-    margin:20px;
+    margin-bottom:20px;
 }
 
 .btn{
-    background:linear-gradient(135deg,#6a5cff,#8f7bff);
+    background:white;
     border:none;
-    padding:10px 15px;
-    color:white;
-    border-radius:15px;
+    padding:10px 20px;
+    border-radius:20px;
     cursor:pointer;
+    font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<h2>🔗 Соедини правильно</h2>
+<h2>Ұрлық салдарына қатысты сөздерді таңдаңыз</h2>
 
-<div class="area">
-    <!-- левая колонка -->
-    <div class="column" id="left">
-        <div class="item" data-match="1" onclick="pickLeft(this)">Никотин</div>
-        <div class="item" data-match="2" onclick="pickLeft(this)">Угарный газ</div>
-        <div class="item" data-match="3" onclick="pickLeft(this)">Кадмий</div>
-    </div>
+<div class="container">
 
-    <!-- правая колонка -->
-    <div class="column" id="right">
-        <div class="item" data-match="1" onclick="pickRight(this)">Вызывает зависимость</div>
-        <div class="item" data-match="2" onclick="pickRight(this)">Снижает кислород в крови</div>
-        <div class="item" data-match="3" onclick="pickRight(this)">Токсичный металл</div>
-    </div>
+<div class="words">
+<div class="word" draggable="true" data-type="bad">Ләззат</div>
+<div class="word" draggable="true" data-type="bad">Дұрыс шешім</div>
+<div class="word" draggable="true" data-type="bad">Бақыт</div>
+<div class="word" draggable="true" data-type="bad">Мақтаныш</div>
+<div class="word" draggable="true" data-type="bad">Бедел өсуі</div>
+<div class="word" draggable="true" data-type="bad">Сенімділік артады</div>
+<div class="word" draggable="true" data-type="bad">Правильные</div>
+
+<div class="word" draggable="true" data-type="good">Болашаққа кедергі</div>
+<div class="word" draggable="true" data-type="good">Түбі қорлыққа апарады</div>
+<div class="word" draggable="true" data-type="good">Тәртіптік жаза</div>
+<div class="word" draggable="true" data-type="good">Заңбұзушылық</div>
+<div class="word" draggable="true" data-type="good">Ұят</div>
+<div class="word" draggable="true" data-type="good">Абыройсыздық</div>
+<div class="word" draggable="true" data-type="good">Беделдің түсуі</div>
+<div class="word" draggable="true" data-type="good">Қауіп</div>
+</div>
+
+<div class="slot" data-accept="good">
+Сюда перетащите последствия ұрлық
+</div>
+
 </div>
 
 <div class="nav">
-    <button class="btn" onclick="location.href='page5.html'">← Назад</button>
-    <button class="btn" onclick="location.href='page7.html'">Дальше →</button>
+<a href="page5.html"><button class="btn">← Назад</button></a>
+<a href="page7.html"><button class="btn">Дальше →</button></a>
 </div>
 
 <script>
-let leftPick = null;
+const words=document.querySelectorAll('.word');
+const slot=document.querySelector('.slot');
 
-function pickLeft(el){
-    document.querySelectorAll("#left .item").forEach(i=>i.classList.remove("selected"));
-    leftPick = el;
-    el.classList.add("selected");
-}
+let dragged=null;
 
-function pickRight(el){
-    if(!leftPick) return;
+words.forEach(word=>{
+    word.addEventListener('dragstart',()=>{
+        dragged=word;
+    });
+});
 
-    if(leftPick.dataset.match === el.dataset.match){
-        leftPick.classList.remove("selected");
-        leftPick.classList.add("correct");
-        el.classList.add("correct");
-    } else {
-        el.classList.add("wrong");
-        setTimeout(()=>el.classList.remove("wrong"),700);
+slot.addEventListener('dragover',e=>{
+    e.preventDefault();
+});
+
+slot.addEventListener('drop',()=>{
+    if(!dragged) return;
+
+    if(dragged.dataset.type==="good"){
+        dragged.classList.add("correct");
+        slot.appendChild(dragged);
+    }else{
+        dragged.classList.add("wrong");
+        setTimeout(()=>{
+            dragged.classList.remove("wrong");
+        },800);
     }
-
-    leftPick = null;
-}
+});
 </script>
 
 </body>
